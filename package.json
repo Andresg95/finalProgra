@@ -1,0 +1,17 @@
+{
+  "name": "pg2grupo1",
+  "version": "1.0.0",
+  "description": "Monorepo del grupo 1",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./02-node/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/programacionwebuneatlantico/pg2grupo1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/programacionwebuneatlantico/pg2grupo1#readme"
+}
