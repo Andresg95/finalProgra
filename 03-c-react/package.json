@@ -1,0 +1,15 @@
+{
+  "name": "03-c-react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ws --spa index.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "local-web-server": "^2.6.1"
+  }
+}
