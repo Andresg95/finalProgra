@@ -13,16 +13,15 @@ const getInteract =  (req, res)=>{
     
     //with promises 
 
-    // service.interactLogic(params)
-    // .then(result=> {
-    //     res.json("there u go: ", result);
-    // })
-    // .catch( err => console.log(err));
+    service.interactLogic(params)
+    .then(result=> {
+        res.status(200).json(result);
+    })
+    .catch( err => res.status(400).json(err));
     
-    const result = service.interactLogic(params);
-    res.json(result);
+    //const result = service.interactLogic(params);
 }
-
+ 
 
 module.exports = {
     getInteract

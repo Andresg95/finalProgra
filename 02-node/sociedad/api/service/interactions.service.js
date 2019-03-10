@@ -16,28 +16,35 @@ const buildResponse = (id, type, date) => {
 };
 
 const interactLogic = params => {
+
+
   const { id, type, date } = params;
 
   //generate random type
-  myRandom = Math.round(Math.random());
-  myType = myRandom == 0 ? selfish : altruistic;
-  console.log("im ", myType);
+  return new Promise((resolve,rejected) => {
+    if(type!== "selfish" && type!== "altruistic" ){
+      rejected("Type not found");
+    }
+    myRandom = Math.round(Math.random());
+    myType = myRandom == 0 ? selfish : altruistic;
+    console.log("im ", myType);
 
-  if (myType == altruistic) {
-    if (type != altruistic) {
-      points++;
+
+    if (myType == altruistic) {
+      if (type != altruistic) {
+        points++;
+      } else {
+        points += 2;
+      }
     } else {
-      points += 2;
+      if (type == altruistic) {
+        points++;
+      }
     }
-  } else {
-    if (type == altruistic) {
-      points++;
-    }
-  }
 
-  console.log("points this round", points);
-
-  return buildResponse(id, myType, date);
+    console.log("points this round", points);
+    resolve(buildResponse(id, myType, date));
+  });
 };
 
 module.exports = {
