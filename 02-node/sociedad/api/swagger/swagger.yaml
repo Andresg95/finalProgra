@@ -1,0 +1,76 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Server altruistic interaction!
+# during dev, should point to your local machine
+host: localhost:10010
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+
+  /interact:
+    x-swagger-router-controller: interaction.controller
+    # binds a127 app logic to a route
+    get:
+      description: Returns random response based on input
+      # used as the method name of the controller
+      operationId: getInteract
+      parameters:
+        - name: uuid
+          in: query
+          description: Unique identifier
+          required: true
+          type: string
+        - name: type
+          in: query
+          description: Find out if im just like you!
+          required: true
+          type: string
+        - name: date
+          in: query
+          description: You can include the date if you want
+          required: false
+          type: string
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/SampleRequestResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  
+  SampleRequestResponse:
+    properties:
+      id:
+        type: string
+      type:
+        type: string
+      timeStamp:
+        type: string
+      
+ 
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
