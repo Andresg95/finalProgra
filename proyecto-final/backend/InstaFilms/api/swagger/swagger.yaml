@@ -1,0 +1,812 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: InstaFilms
+# during dev, should point to your local machine 
+host: localhost:10010
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+
+  /movie:
+    x-swagger-router-controller: movie.controller
+
+    post:
+      description: Add movie to db
+      # used as the method name of the controller
+      operationId: addMovie
+      parameters:
+        - in: body
+          name: movie
+          description: add movie
+          schema:
+            $ref: "#/definitions/Movie"
+      responses:
+        "201":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetMovieResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"  
+    
+  /movie/{id}:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: movie.controller
+  
+    get:
+      description: Returns individual movie by id
+      # used as the method name of the controller
+      operationId: getMovieById
+      parameters:
+        - name: id
+          in: path
+          description: Movie to be returned
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/GetMovieResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
+    put:
+      description: Updates movie by securityDefinitions
+      operationId: updateMovieById
+      parameters:
+        - name: id 
+          in: path
+          description: Movie id to update
+          required: true
+          type: string
+        - in: body
+          name: movie
+          description: The movie to update.
+          schema: 
+            $ref: "#/definitions/Movie"
+      responses:
+        "200": 
+          description: Success
+          schema:
+            $ref: "#/definitions/GetMovieResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+      
+  /movie/landing:
+    x-swagger-router-controller: movie.controller
+    get:
+    #Filtered by genre
+      description: get the movie poster
+      operationId: getMovieLanding
+      parameters:
+        - name: id
+          in: query
+          description: Movie id 
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetMoviePosterResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  
+  /movie/title:
+    x-swagger-router-controller: movie.controller
+    get:
+      description: Returns titles ( LIKE +"OCEANS"+)
+      # used as the method name of the controller
+      operationId: getMovieTitle
+      parameters:
+        - name: id
+          in: query
+          description: Movie id 
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/GetMovieTitleResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  
+    
+  /movie/transactions:
+  #Transactions manipulate a user standby, viewed and favorites.
+    x-swagger-router-controller: transactions.controller
+    post:
+      description: AddTransaction
+      # used as the method name of the controller
+      operationId: addmovieFavorite
+      parameters:
+        - name: id
+          in: query
+          description: Id of the movie
+          required: true
+          type: string
+        - name: user
+          in: query
+          description: Id of user
+          required: true
+          type: integer
+        - name: transaction
+          in: query
+          description: initialize standBy, viewed or favorite
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition #transaction.
+            $ref: "#/definitions/Transanction"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+    get:
+      description: get transaction of a user, (pending, watched, favorite)
+      # used as the method name of the controller
+      operationId: getTransaction
+      parameters:
+        - name: id
+          in: query
+          description: Id of user
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            #[ARRAY DE MOVIES]
+            $ref: "#/definitions/GetMovieListResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+    put:
+      description: update a state of Transaction (viewed, fav, pending)
+      # used as the method name of the controller
+      operationId: updateTransaction
+      parameters:
+        - name: id
+          in: query
+          description: Id of the movie
+          required: true
+          type: string
+        - name: user
+          in: query
+          description: Id of user
+          required: true
+          type: integer
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            #[ARRAY DE MOVIES]
+            $ref: "#/definitions/GetMovieListResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  
+    delete:
+      description: Delete a transaction
+      operationId: deleteTransaction
+      parameters:
+        - name: id
+          in: query
+          description: Id of the movie
+          required: true
+          type: string
+        - name: user
+          in: query
+          description: Id of user
+          required: true
+          type: integer
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/SuccessResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+            
+    
+  /user:
+    x-swagger-router-controller: user.controller
+    post:
+      description: Add user to db
+      # used as the method name of the controller
+      operationId: addUser
+      parameters:
+        - in: body
+          name: user
+          description: add user
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "201":
+          description: Success
+          schema:
+            $ref: "#/definitions/GetUserResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    
+  /user/{id}:
+    x-swagger-router-controller: user.controller
+    get:
+      description: user by id
+      # used as the method name of the controller
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          description: Returns user
+          required: true
+          type: integer
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/GetUserResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+    put:
+      description: Update user
+      operationId: updateUser
+      parameters:
+        - name: id 
+          in: path
+          description: user id 
+          required: true
+          type: integer
+        - in: body
+          name: user
+          description: The user to update.
+          schema: 
+            $ref: "#/definitions/User"
+      responses:
+        "200": 
+          description: Success
+          schema:
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /review:
+    x-swagger-router-controller: review.controller
+    get:
+      description: get all reviews
+      # used as the method name of the controller
+      operationId: getReview
+      parameters:
+        - name: user
+          in: query
+          description: id User
+          required: true          
+          type: integer 
+        - name: movie
+          in: query
+          description: id imdb movie
+          required: true
+          type: string                  
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/GetReviewResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      description:  add review of movie
+      # used as the method name of the controller
+      operationId: addReview
+      parameters:
+        - name: id
+          in: query
+          description: Review Id
+          required: true
+          type: integer
+        - name: user
+          in: query
+          description: id User
+          required: true
+          type: integer
+          
+        - name: movie
+          in: query
+          description: id imdb movie
+          required: true
+          type: string
+    
+      responses:
+        "201":
+          description: Success
+          schema:
+            # a pointer to a definition
+            #[ARRAY DE MOVIES]
+            $ref: "#/definitions/GetReviewResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+    put:
+      description: update a popcorns of reviwe 
+      # used as the method name of the controller
+      operationId: updateReview
+      parameters:
+        - name: id
+          in: query
+          description: Review Id
+          required: true
+          type: integer
+  
+        - name: popcorns
+          in: query
+          description: numer of popcorn of review
+          required: true
+          type: integer
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            #[ARRAY DE MOVIES]
+            $ref: "#/definitions/GetReviewResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"    
+
+  /review/{id}/{type}:
+    x-swagger-router-controller: review.controller
+    get:
+      description: get all reviews
+      # used as the method name of the controller
+      operationId: getReviewById
+      parameters:
+        - name: id
+          in: path
+          description: id User
+          required: true
+          type: integer
+          
+        - name: type
+          in: path
+          description: id User
+          required: true
+          type: integer
+                           
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/GetReviewListResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  
+
+  /follow:
+    x-swagger-router-controller: user.controller
+    post:
+      description: follow someone
+      # used as the method name of the controller
+      operationId: addFollowing
+      parameters:
+        - name: idFollower
+          in: query
+          description: user
+          required: true
+          type: integer
+  
+        - name: idToFollow
+          in: query
+          description: user to follow
+          required: true
+          type: integer
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            #[ARRAY DE MOVIES]
+            $ref: "#/definitions/GetUserResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse" 
+
+    delete:
+      description: unfollow a user
+      operationId: deleteFollow
+      parameters:
+        - name: id
+          in: query
+          description: id User to unfollow
+          required: true
+          type: integer
+        - name: user
+          in: query
+          description: id of follower (Spectateurs)
+          required: true
+          type: integer
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/SuccessResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+definitions:
+
+  Movie:
+    type: object
+    properties:
+      IDimdb:
+        type: string
+        description: ID imdb.
+      title:
+        type: string
+        description: Movie title.
+      year:
+        type: string
+        format: date
+        description: year movie was released.
+      runtime:
+        type: string
+        description: Runetime in minutes.
+      genre: 
+        type: string
+        description: Movie genre.
+      director:
+        type: string
+        description: Movie director name.
+      writer:
+        type: string
+        description: Movie writer.
+      actors:
+        type: string
+        description: Main actors present in movie.
+      plot:
+        type: string
+        description: Movie main sequence of events.
+      poster:
+        type: string
+        description: Movie poster.
+      status:
+        type: boolean
+        description: Is the movie available or not?
+    required:
+      - IDimdb 
+
+#Users
+  User:
+    type: object
+    properties:
+      ID:
+        type: integer
+        description: ID user
+      userName:
+        type: string
+        description: nickname in the app
+      email:
+        type: string
+        description: user email
+      password:
+        type: string
+        description: user password
+      popcornsGlobal:
+        type: integer
+        description:  popcorns of the user
+      isAdmin:
+        type: integer
+        format: boolean 
+        description: Super Admin ( y or nop :( XD)
+      silenced:
+        type: integer
+        format: boolean
+        description: the user is allow to review movies
+      profilePath:
+        type: string
+        description: path of profile photo                                                                      
+    required:
+      - ID
+      - userName
+      - email
+      - password
+      
+#transanction
+  Transanction:
+    type: object
+    properties:
+      ID:
+        type: integer
+        description: ID transanction
+      IDMovie:
+        type: string
+        description: id movie IMDB
+      IDUser:
+        type: integer
+        description: id User
+      standBy:
+        type: integer
+        format: boolean
+        description: status standby 1 not 0 :(
+      viewed:
+        type: integer
+        format: boolean
+        description: status viewed 1 not 0 :(
+      favorite:
+        type: integer
+        format: boolean
+        description: favorite standby 1 not 0 :(
+    required:
+      - IDUser
+
+#reviews
+  Reviews:
+    type: object
+    properties:
+      ID:
+        type: integer
+        description: ID review
+      IDMovie:
+        type: string
+        description: id movie IMDB
+      IDUser:
+        type: integer
+        description: id User
+      rate:
+        type: string
+        description: Text review not passing 500 chars
+      popcorns:
+        type: integer
+        description: votes of review
+    required:
+      - ID
+      - IDUser
+
+#GetResponses
+  #Movies
+
+
+  GetReviewResponse:
+    type: object
+    properties:
+      ID:
+        type: integer
+        description: ID review
+      IDMovie:
+        type: string
+        description: id movie IMDB
+      IDUser:
+        type: integer
+        description: id User
+      rate:
+        type: string
+        description: Text review not passing 500 chars
+      popcorns:
+        type: integer
+        description: votes of review
+    required:
+      - ID
+      - IDMovie
+      - IDUser
+      - rate
+      - popcorns
+
+  GetMovieResponse:
+      type: object
+      properties:
+        IDimdb:
+          type: string
+          description: ID imdb.
+        title:
+          type: string
+          description: Movie title.
+        year:
+          type: string
+          format: date
+          description: year movie was released.
+        runtime:
+          type: string
+          description: Runetime in minutes.
+        genre: 
+          type: string
+          description: Movie genre.
+        director:
+          type: string
+          description: Movie director name.
+        writer:
+          type: string
+          description: Movie writer.
+        actors:
+          type: string
+          description: Main actors present in movie.
+        plot:
+          type: string
+          description: Movie main sequence of events.
+        poster:
+          type: string
+          description: Movie poster.
+        status:
+          type: boolean
+          description: Is the movie available or not?
+      required:
+        - IDimdb
+        - title
+        - year
+        - runtime
+        - genre
+        - director
+        - writer
+        - actors
+        - plot
+        - poster
+        - status
+
+  GetMovieTitleResponse:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Movie title.
+      required:
+        - title
+
+  GetMoviePosterResponse:
+      type: object
+      properties:
+        IDimdb:
+          type: string
+          description: ID imdb.
+        poster:
+          type: string
+          description: Movie poster.
+      required:
+        - IDimdb
+        - poster
+ 
+  GetMovieListResponse:
+    properties:
+      Movies:
+        type: array
+        items:
+          $ref: "#/definitions/Movie"
+    required: 
+      - Movies
+    
+  GetReviewListResponse:
+    properties:
+      Reviews:
+        type: array
+        items:
+          $ref: "#/definitions/Reviews"
+    required:
+      - Reviews
+
+  #Users
+  #Add user
+  GetUserResponse:
+    type: object
+    properties:
+      ID:
+        type: integer
+        description: ID user
+      userName:
+        type: string
+        description: username 
+      email:
+        type: string
+        description: user email
+      password:
+        type: string
+        description: user password
+      popcornsGlobal:
+        type: integer
+        description:  popcorns of the user
+      isAdmin:
+        type: integer
+        format: boolean 
+        description: Super Admin ( yes or nop :( XD)
+      silenced:
+        type: integer
+        format: boolean
+        description: the user is allow to review movies
+      profilePath:
+        type: string
+        description: path of profile photo                                                                      
+    required:
+      - ID
+      - userName
+      - email
+      - password
+      - popcornsGlobal
+      - isAdmin
+      - silenced
+      - profilePath
+
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+
+  SuccessResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
