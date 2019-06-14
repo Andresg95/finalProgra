@@ -9,9 +9,19 @@ const sequelize = require('sequelize');
 const Op = sequelize.Op;
 
 
+const movieExists = async imdbid => {
+  const result = await User.findOne({
+    where: {
+      imdbid
+    }
+  });
+  return _.isNull(await result) ? false : true;
+};
+
+
 const getMovieById = async IDimdb => {
-  const mymovie = await movie.findByPk(IDimdb);
-  return mymovie;
+  return await movie.findByPk(IDimdb);
+  
 };
 
 const addMovie = async newmovie => {
@@ -139,5 +149,6 @@ module.exports = {
   addMovie,
   updateMovie,
   getMovieLanding,
-  getMoviesByTitle
+  getMoviesByTitle,
+  movieExists
 };

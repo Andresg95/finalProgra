@@ -8,8 +8,10 @@ const sequelize = require("sequelize");
 const Op = sequelize.Op;
 
 const getUserById = async id => {
-    const data = await User.findByPk(id);    
-    delete data.dataValues.password;
+    const data = await User.findByPk(id); 
+    if(!_.isNull(data)){
+      delete data.dataValues.password;
+    }   
     return data;
 };
 
@@ -103,8 +105,6 @@ const updateUser = async data => {
 };
 
 
-
-
 //local function
 const checknullparams = fields => {
 
@@ -138,9 +138,21 @@ const emailExists = async email => {
   return _.isNull(await result) ? false : true;
 };
 
+const userExists = async id => {
+
+  const result = await User.findOne({
+    where: {
+      id
+    }
+  })
+
+  return _.isNull(await result) ? false : true;
+}
+
 
 module.exports = {
   getUserById,
   addUser,
-  updateUser
+  updateUser,
+  userExists
 };
