@@ -44,8 +44,6 @@ const getMovieLanding = async (req, res) => {
   try {
     //optional sending genre
     const genre = req.swagger.params.genre.value; 
-    
-      
     const data = await movieService.getMovieLanding(genre);
     res.send(data);
   } catch (error) {
@@ -54,9 +52,22 @@ const getMovieLanding = async (req, res) => {
   }
 };
 
+const getMovieTitle = async (req, res) => {
+
+
+    try {
+        const title = req.swagger.params.title.value;
+        const data = await movieService.getMoviesByTitle(title);
+        res.send(data);
+    } catch (error) {
+        res.status(500).send("error in", name, ", in ", getMoviesByTitle.name);
+    }
+}
+
 module.exports = {
   getMovieById,
   addMovie,
   updateMovieById,
-  getMovieLanding
+  getMovieLanding,
+  getMovieTitle
 };

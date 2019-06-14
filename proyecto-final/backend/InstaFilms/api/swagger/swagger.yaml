@@ -93,7 +93,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
 
       
-  /movies/landing:
+  /movies/landing/:
     x-swagger-router-controller: movie.controller
     get:
     #Filtered by genre
@@ -115,16 +115,16 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
   
-  /movie/title:
+  /movies/title/:
     x-swagger-router-controller: movie.controller
     get:
       description: Returns titles ( LIKE +"OCEANS"+)
       # used as the method name of the controller
       operationId: getMovieTitle
       parameters:
-        - name: id
+        - name: title
           in: query
-          description: Movie id 
+          description: find all movies containing that string in title
           required: true
           type: string
       responses:

@@ -5,6 +5,9 @@ const logger = require("../../config/customlogger");
 const _ = require("lodash");
 const sequelize = require('sequelize');
 
+//sequelize operators
+const Op = sequelize.Op;
+
 
 const getMovieById = async IDimdb => {
   const mymovie = await movie.findByPk(IDimdb);
@@ -40,9 +43,7 @@ const updateMovie = async data => {
     });
 };
 
-const getMovieLanding = async (fetchGenre) => {
-
-  const Op = sequelize.Op;
+const getMovieLanding = async fetchGenre => {
 
   let results;
   if(_.isUndefined(fetchGenre)){
@@ -85,7 +86,32 @@ const getMovieLanding = async (fetchGenre) => {
   return results; 
 }
 
+const getMoviesByTitle = async title => {
 
+  console.log(title);
+  
+  //we fetch all results of movie where title is contained.
+  return movie.findAll({
+      where: {
+        title: {
+          [Op.substring] : title
+        }
+      }
+  }).then(results=>{
+    let aux = []
+    results.forEach(movie=>{
+      let data={
+        imdbid: movie.imdbid,
+        title: movie.title
+      };
+      aux.push(data)
+    })
+    return aux;
+  }).catch(e=>{
+    logger.error(e);
+    throw e;
+  });
+}
 
 //local-functions
 //fieldstoupdate:
@@ -109,5 +135,6 @@ module.exports = {
   getMovieById,
   addMovie,
   updateMovie,
-  getMovieLanding
+  getMovieLanding,
+  getMoviesByTitle
 };
