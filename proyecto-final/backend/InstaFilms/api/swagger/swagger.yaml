@@ -19,7 +19,7 @@ produces:
   - application/json
 paths:
 
-  /movie:
+  /movies:
     x-swagger-router-controller: movie.controller
 
     post:
@@ -53,7 +53,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Movie to be returned
+          description: Movie ibdm to be returned
           required: true
           type: string
       responses:
@@ -139,15 +139,15 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  /movie/transactions/:
-    x-swagger-router-controller: transactions.controller
+  /movies/transactions/:
+    x-swagger-router-controller: transaction.controller
     post:
       description: AddTransaction for user and movie
       # used as the method name of the controller
-      operationId: addmovieFavorite
+      operationId: AddTransaction
       parameters:
         - in: body
-          name: movie
+          name: transaction
           description: add transaction
           schema:
             $ref: "#/definitions/Transaction"
@@ -156,16 +156,16 @@ paths:
           description: Success
           schema:
             # a pointer to a definition #transaction.
-            $ref: "#/definitions/Transaction"
+            $ref: "#/definitions/SuccessResponse"
         # responses may fall through to errors
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
   
-  /movie/transaction/:
+  /movies/transaction:
   #Transactions manipulate a user standby, viewed and favorites.
-   
+    x-swagger-router-controller: transaction.controller
     get:
       description: get transaction of a user for a movie, (pending, watched, favorite)
       # used as the method name of the controller
@@ -187,7 +187,7 @@ paths:
           schema:
             # a pointer to a definition
             #[ARRAY DE MOVIES]
-            $ref: "#/definitions/Transaction"
+            $ref: "#/definitions/TransactionResponse"
         # responses may fall through to errors
         default:
           description: Error
@@ -606,13 +606,10 @@ definitions:
   Transaction:
     type: object
     properties:
-      ID:
-        type: integer
-        description: ID transaction
-      IDMovie:
+      id_movie:
         type: string
         description: id movie IMDB
-      IDUser:
+      id_user:
         type: integer
         description: id User
       standBy:
@@ -628,8 +625,37 @@ definitions:
         format: boolean
         description: favorite standby 1 not 0 :(
     required:
-      - IDUser
-      - IDMovie
+      - id_user
+      - id_movie
+  
+  #transanction
+  TransactionResponse:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: transaction id
+      id_movie:
+        type: string
+        description: id movie IMDB
+      id_user:
+        type: integer
+        description: id User
+      standBy:
+        type: integer
+        format: boolean
+        description: status standby 1 not 0 :(
+      viewed:
+        type: integer
+        format: boolean
+        description: status viewed 1 not 0 :(
+      favorite:
+        type: integer
+        format: boolean
+        description: favorite standby 1 not 0 :(
+    required:
+      - id_user
+      - id_movie
 
 #reviews
   Reviews:
@@ -648,8 +674,7 @@ definitions:
         type: integer
         description: votes of review
     required:
-      - ID
-      - IDUser
+      - id_user
 
 #GetResponses
   #Movies

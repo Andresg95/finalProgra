@@ -4,6 +4,8 @@ const { movieExists }  = require('./movie.service');
 
 const AddTransaction = async (params) => {
 
+    console.log(params);
+    return "service reachable"
 }
 
 const getTransaction = async (params) => {

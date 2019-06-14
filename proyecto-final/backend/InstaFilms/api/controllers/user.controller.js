@@ -23,6 +23,8 @@ const addUser = async (req, res) => {
       ...req.body
     };
 
+    console.log(params);
+    
     const data = await userService.addUser(params);
     res.status(200).send(data);
   } catch (error) {
