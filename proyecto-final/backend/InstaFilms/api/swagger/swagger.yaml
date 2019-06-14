@@ -314,7 +314,7 @@ paths:
           name: user
           description: The user to update.
           schema: 
-            $ref: "#/definitions/User"
+            $ref: "#/definitions/updateUser"
       responses:
         "200": 
           description: Success
@@ -554,10 +554,7 @@ definitions:
   User:
     type: object
     properties:
-      ID:
-        type: integer
-        description: ID user
-      userName:
+      username:
         type: string
         description: nickname in the app
       email:
@@ -566,10 +563,10 @@ definitions:
       password:
         type: string
         description: user password
-      popcornsGlobal:
+      popcorns_global:
         type: integer
         description:  popcorns of the user
-      isAdmin:
+      is_admin:
         type: integer
         format: boolean 
         description: Super Admin ( y or nop :( XD)
@@ -581,10 +578,37 @@ definitions:
         type: string
         description: path of profile photo                                                                      
     required:
-      - ID
-      - userName
+      - username
       - email
       - password
+      
+  updateUser:
+    type: object
+    properties:
+      username:
+        type: string
+        description: nickname in the app
+      email:
+        type: string
+        description: user email
+      password:
+        type: string
+        description: user password
+      popcorns_global:
+        type: integer
+        description:  popcorns of the user
+      is_admin:
+        type: integer
+        format: boolean 
+        description: Super Admin ( y or nop :( XD)
+      silenced:
+        type: integer
+        format: boolean
+        description: the user is allow to review movies
+      profilePath:
+        type: string
+        description: path of profile photo                                                                      
+    
       
 #transanction
   Transanction:

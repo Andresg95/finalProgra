@@ -40,7 +40,10 @@ const updateMovie = async data => {
     })
     .catch(e => {
       logger.error("error fetching movie", e);
+      throw e;
     });
+
+    return `updated movie with id ${imdbid}`
 };
 
 const getMovieLanding = async fetchGenre => {

@@ -8,6 +8,7 @@ const User = db.define(
       type: sequelize.INTEGER,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true,
       field: "ID"
     },
     username: {
@@ -31,6 +32,7 @@ const User = db.define(
       field: "isAdmin"
     },
     silenced: {
+        type: sequelize.BOOLEAN,
         field: "Silenced"
     },
     profile_path:{
