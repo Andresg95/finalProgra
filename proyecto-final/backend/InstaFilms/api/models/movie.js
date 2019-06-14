@@ -41,7 +41,8 @@ const Movie = db.define("movie", {
 
 },
 {
-    timestamps: false
+    timestamps: false,
+    tableName: "movies"
 });
 
 

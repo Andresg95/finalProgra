@@ -255,7 +255,7 @@ paths:
 
             
     
-  /user:
+  /users:
     x-swagger-router-controller: user.controller
     post:
       description: Add user to db

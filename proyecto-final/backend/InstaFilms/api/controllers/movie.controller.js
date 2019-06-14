@@ -54,7 +54,6 @@ const getMovieLanding = async (req, res) => {
 
 const getMovieTitle = async (req, res) => {
 
-
     try {
         const title = req.swagger.params.title.value;
         const data = await movieService.getMoviesByTitle(title);
