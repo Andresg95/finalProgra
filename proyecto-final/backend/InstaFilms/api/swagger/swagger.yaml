@@ -93,17 +93,17 @@ paths:
             $ref: "#/definitions/ErrorResponse"
 
       
-  /movie/landing:
+  /movies/landing:
     x-swagger-router-controller: movie.controller
     get:
     #Filtered by genre
       description: get the movie poster
       operationId: getMovieLanding
       parameters:
-        - name: id
+        - name: genre
           in: query
-          description: Movie id 
-          required: true
+          description: optinal genres
+          required: false
           type: string
       responses:
         "200":
@@ -513,7 +513,7 @@ definitions:
   Movie:
     type: object
     properties:
-      IDimdb:
+      imdbid:
         type: string
         description: ID imdb.
       title:
@@ -547,8 +547,8 @@ definitions:
       status:
         type: boolean
         description: Is the movie available or not?
-    required:
-      - IDimdb 
+
+      
 
 #Users
   User:
@@ -669,7 +669,7 @@ definitions:
   GetMovieResponse:
       type: object
       properties:
-        IDimdb:
+        imdbid:
           type: string
           description: ID imdb.
         title:
@@ -704,7 +704,7 @@ definitions:
           type: boolean
           description: Is the movie available or not?
       required:
-        - IDimdb
+        - imdbid
         - title
         - year
         - runtime
