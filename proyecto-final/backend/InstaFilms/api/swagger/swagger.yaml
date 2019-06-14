@@ -109,7 +109,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/GetMoviePosterResponse"
+            $ref: "#/definitions/GetMoviePosterListResponse"
         default:
           description: Error
           schema:
@@ -132,67 +132,62 @@ paths:
           description: Success
           schema:
             # a pointer to a definition
-            $ref: "#/definitions/GetMovieTitleResponse"
+            $ref: "#/definitions/GetMovieTitleListResponse"
         # responses may fall through to errors
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-  
-    
-  /movie/transactions:
-  #Transactions manipulate a user standby, viewed and favorites.
+  /movie/transactions/:
     x-swagger-router-controller: transactions.controller
     post:
-      description: AddTransaction
+      description: AddTransaction for user and movie
       # used as the method name of the controller
       operationId: addmovieFavorite
       parameters:
-        - name: id
-          in: query
-          description: Id of the movie
-          required: true
-          type: string
-        - name: user
-          in: query
-          description: Id of user
-          required: true
-          type: integer
-        - name: transaction
-          in: query
-          description: initialize standBy, viewed or favorite
-          required: true
-          type: string
+        - in: body
+          name: movie
+          description: add transaction
+          schema:
+            $ref: "#/definitions/Transaction"
       responses:
         "200":
           description: Success
           schema:
             # a pointer to a definition #transaction.
-            $ref: "#/definitions/Transanction"
+            $ref: "#/definitions/Transaction"
         # responses may fall through to errors
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-
+  
+  /movie/transaction/:
+  #Transactions manipulate a user standby, viewed and favorites.
+   
     get:
-      description: get transaction of a user, (pending, watched, favorite)
+      description: get transaction of a user for a movie, (pending, watched, favorite)
       # used as the method name of the controller
       operationId: getTransaction
       parameters:
-        - name: id
+        - name: id_movie
+          in: query
+          description: Id of the movie
+          required: true
+          type: string
+        - name: id_user
           in: query
           description: Id of user
           required: true
-          type: string
+          type: integer
       responses:
         "200":
           description: Success
           schema:
             # a pointer to a definition
             #[ARRAY DE MOVIES]
-            $ref: "#/definitions/GetMovieListResponse"
+            $ref: "#/definitions/Transaction"
         # responses may fall through to errors
         default:
           description: Error
@@ -204,12 +199,12 @@ paths:
       # used as the method name of the controller
       operationId: updateTransaction
       parameters:
-        - name: id
+        - name: id_movie
           in: query
           description: Id of the movie
           required: true
           type: string
-        - name: user
+        - name: id_user
           in: query
           description: Id of user
           required: true
@@ -219,9 +214,7 @@ paths:
           description: Success
           schema:
             # a pointer to a definition
-            #[ARRAY DE MOVIES]
-            $ref: "#/definitions/GetMovieListResponse"
-        # responses may fall through to errors
+            $ref: "#/definitions/Transaction"
         default:
           description: Error
           schema:
@@ -247,7 +240,6 @@ paths:
           schema:
             # a pointer to a definition
             $ref: "#/definitions/SuccessResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
@@ -269,7 +261,7 @@ paths:
             $ref: "#/definitions/User"
       responses:
         "201":
-          description: Success
+          description: SuccessTransaction
           schema:
             $ref: "#/definitions/GetUserResponse"
         default:
@@ -611,12 +603,12 @@ definitions:
     
       
 #transanction
-  Transanction:
+  Transaction:
     type: object
     properties:
       ID:
         type: integer
-        description: ID transanction
+        description: ID transaction
       IDMovie:
         type: string
         description: id movie IMDB
@@ -637,18 +629,16 @@ definitions:
         description: favorite standby 1 not 0 :(
     required:
       - IDUser
+      - IDMovie
 
 #reviews
   Reviews:
     type: object
     properties:
-      ID:
-        type: integer
-        description: ID review
-      IDMovie:
+      id_movie:
         type: string
         description: id movie IMDB
-      IDUser:
+      id_user:
         type: integer
         description: id User
       rate:
@@ -743,11 +733,15 @@ definitions:
   GetMovieTitleResponse:
       type: object
       properties:
+        IDimdb:
+          type: string
+          description: ID imdb.
         title:
           type: string
           description: Movie title.
       required:
         - title
+        - IDimdb
 
   GetMoviePosterResponse:
       type: object
@@ -762,12 +756,30 @@ definitions:
         - IDimdb
         - poster
  
-  GetMovieListResponse:
+  # GetMovieListResponse:
+  #   properties:
+  #     Movies:
+  #       type: array
+  #       items:
+  #         $ref: "#/definitions/Movie"
+  #   required: 
+  #     - Movies
+
+  GetMovieTitleListResponse:
     properties:
       Movies:
         type: array
         items:
-          $ref: "#/definitions/Movie"
+          $ref: "#/definitions/GetMovieTitleResponse"
+    required: 
+      - Movies
+
+  GetMoviePosterListResponse:
+    properties:
+      Movies:
+        type: array
+        items:
+          $ref: "#/definitions/GetMoviePosterResponse"
     required: 
       - Movies
     

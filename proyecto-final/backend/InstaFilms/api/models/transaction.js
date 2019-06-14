@@ -7,6 +7,7 @@ const Transaction = db.define(
     id: {
       type: sequelize.INTEGER,
       allowNull: false,
+      autoIncrement: false,
       primaryKey: true,
       field: "ID"
     },
