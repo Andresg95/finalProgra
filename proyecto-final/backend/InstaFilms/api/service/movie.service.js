@@ -1,6 +1,6 @@
 //import db and model
-const db = require("../../config/database");
-const movie = require("../models/movie");
+const models = require("../models");
+const movie = models.movie;
 const logger = require("../../config/customlogger");
 const _ = require("lodash");
 const sequelize = require('sequelize');
@@ -10,7 +10,7 @@ const Op = sequelize.Op;
 
 
 const movieExists = async imdbid => {
-  const result = await User.findOne({
+  const result = await movie.findOne({
     where: {
       imdbid
     }
@@ -100,8 +100,6 @@ const getMovieLanding = async fetchGenre => {
 }
 
 const getMoviesByTitle = async title => {
-
-  console.log(title);
   
   //we fetch all results of movie where title is contained.
   return movie.findAll({
@@ -124,7 +122,7 @@ const getMoviesByTitle = async title => {
     logger.error(e);
     throw e;
   });
-}
+};
 
 //local-functions
 //fieldstoupdate:

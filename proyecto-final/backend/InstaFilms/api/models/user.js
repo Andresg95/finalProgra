@@ -1,42 +1,41 @@
-const sequelize = require("sequelize");
-const db = require("../../config/database");
 
-const User = db.define(
+module.exports = (sequelize, DataTypes) =>{
+const User = sequelize.define(
   "user",
   {
     id: {
-      type: sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
       field: "ID"
     },
     username: {
-      type: sequelize.STRING,
+      type: DataTypes.STRING,
       field: "userName"
     },
     email: {
-      type: sequelize.STRING,
+      type: DataTypes.STRING,
       field: "email"
     },
     password: {
-      type: sequelize.STRING,
+      type: DataTypes.STRING,
       field: "password"
     },
     popcorns_global: {
-      type: sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       field: "popcornsGlobal"
     },
     is_admin: {
-      type: sequelize.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       field: "isAdmin"
     },
     silenced: {
-        type: sequelize.BOOLEAN,
+        type: DataTypes.BOOLEAN,
         field: "Silenced"
     },
     profile_path:{
-        type: sequelize.STRING,
+        type: DataTypes.STRING,
         field: "profile_path"
 
     }
@@ -46,5 +45,5 @@ const User = db.define(
     tableName: "users"
   }
 );
-
-module.exports = User;
+return User;
+}

@@ -209,6 +209,11 @@ paths:
           description: Id of user
           required: true
           type: integer
+        - in: body
+          name: transaction
+          description: The transaction to update.
+          schema: 
+            $ref: "#/definitions/TransactionUpdate"
       responses:
         "200":
           description: Success
@@ -224,12 +229,12 @@ paths:
       description: Delete a transaction
       operationId: deleteTransaction
       parameters:
-        - name: id
+        - name: id_movie
           in: query
           description: Id of the movie
           required: true
           type: string
-        - name: user
+        - name: id_user
           in: query
           description: Id of user
           required: true
@@ -245,8 +250,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
-            
-    
+          
   /users:
     x-swagger-router-controller: user.controller
     post:
@@ -612,21 +616,34 @@ definitions:
       id_user:
         type: integer
         description: id User
-      standBy:
-        type: integer
-        format: boolean
+      standby:
+        type: boolean
         description: status standby 1 not 0 :(
       viewed:
-        type: integer
-        format: boolean
+        type: boolean
         description: status viewed 1 not 0 :(
       favorite:
-        type: integer
-        format: boolean
+        type: boolean
         description: favorite standby 1 not 0 :(
     required:
       - id_user
       - id_movie
+      
+      
+  TransactionUpdate:
+    type: object
+    properties:
+      standby:
+        type: boolean
+        description: status standby 1 not 0 :(
+      viewed:
+        type: boolean
+        description: status viewed 1 not 0 :(
+      favorite:
+        type: boolean
+        description: favorite standby 1 not 0 :(
+    
+    
   
   #transanction
   TransactionResponse:

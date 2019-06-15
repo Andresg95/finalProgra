@@ -1,49 +1,47 @@
-const sequelize = require("sequelize");
-
-const db = require("../../config/database");
-
-const Movie = db.define("movie", {
-  imdbid: {
-    type: sequelize.STRING,
-    allowNull: false,
-    primaryKey: true,
-  },
-  title: {
-    type: sequelize.STRING
-  },
-  year: {
-    type: sequelize.STRING
-  },
-  runtime: {
-    type: sequelize.STRING
-  },
-  genre: {
-    type: sequelize.STRING
-  },
-  director:{
-    type: sequelize.STRING
-  },
-  writer: {
-    type: sequelize.STRING
-  },
-  actors: {
-    type: sequelize.STRING 
-  },
-  plot: {
-    type: sequelize.STRING
-  },
-  poster: {
-      type: sequelize.STRING
-  },
-  status: {
-    type: sequelize.INTEGER
-  }
-
-},
-{
-    timestamps: false,
-    tableName: "movies"
-});
-
-
-module.exports = Movie;
+module.exports = (sequelize, DataTypes) => {
+  const Movie = sequelize.define(
+    "movie",
+    {
+      imdbid: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        primaryKey: true
+      },
+      title: {
+        type: DataTypes.STRING
+      },
+      year: {
+        type: DataTypes.STRING
+      },
+      runtime: {
+        type: DataTypes.STRING
+      },
+      genre: {
+        type: DataTypes.STRING
+      },
+      director: {
+        type: DataTypes.STRING
+      },
+      writer: {
+        type: DataTypes.STRING
+      },
+      actors: {
+        type: DataTypes.STRING
+      },
+      plot: {
+        type: DataTypes.STRING
+      },
+      poster: {
+        type: DataTypes.STRING
+      },
+      status: {
+        type: DataTypes.INTEGER
+      }
+    },
+    {
+      timestamps: false,
+      tableName: "movies"
+    }
+  );
+  return Movie;
+};

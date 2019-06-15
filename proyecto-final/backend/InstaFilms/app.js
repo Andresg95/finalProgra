@@ -2,7 +2,6 @@
 
 var SwaggerExpress = require('swagger-express-mw');
 var app = require('express')();
-const db = require('./config/database');
 
 
 var config = {
@@ -20,11 +19,6 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
   
   console.log(`backend started in port ${port}`);
   
-  db
-    .authenticate()
-    .then(() => console.log("database connected"))
-    .catch(err => console.log("error"+err));
-
 });
 
 module.exports = app; // for testing

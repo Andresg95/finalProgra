@@ -3,4 +3,4 @@
 tasks to do:
 
 
-definition for movielanding array objects.
+delete reviews endpoint

@@ -1,34 +1,33 @@
-const sequelize = require("sequelize");
-const db = require("../../config/database");
 
-const Transaction = db.define(
+module.exports = (sequelize, DataTypes) => {
+const Transaction = sequelize.define(
   "transaction",
   {
     id: {
-      type: sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
-      autoIncrement: false,
+      autoIncrement: true,
       primaryKey: true,
       field: "ID"
     },
     id_movie: {
-      type: sequelize.STRING,
+      type: DataTypes.STRING,
       field: "ID_Movies"
     },
     id_user: {
-      type: sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       field: "ID_Users"
     },
     standby: {
-      type: sequelize.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       field: "standBy"
     },
     viewed: {
-      type: sequelize.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       field: "viewed"
     },
     favorite: {
-      type: sequelize.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       field: "favorite"
     }
   },
@@ -38,4 +37,6 @@ const Transaction = db.define(
   }
 );
 
-module.exports = Transaction;
+return Transaction;
+
+}

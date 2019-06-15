@@ -1,5 +1,7 @@
 //import db and model
-const User = require("../models/user");
+const models = require("../models")
+const User = models.user;
+
 const logger = require("../../config/customlogger");
 const _ = require("lodash");
 const sequelize = require("sequelize");
