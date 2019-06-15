@@ -31,6 +31,11 @@
     "test": "swagger project test",
     "edit": "swagger project edit",
     "dev": "nodemon app.js",
-    "validate": "yaml-validator"
+    "validate": "yaml-validator",
+    "migrate": "sequelize db:migrate",
+    "undo-migrate": "sequelize db:migrate:undo",
+    "undo-migrate-all": "sequelize db:migrate:undo:all",
+    "create-migration": "sequelize migration:generate --name"
+
   }
 }

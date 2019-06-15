@@ -41,11 +41,12 @@ const updateMovie = async data => {
   const imdbid = data.id;
   const update = fieldstoupdate(data);
 
-  movie
+  return movie
     .findByPk(imdbid)
     .then(fetchedmovie => {
       if (fetchedmovie) {
-        fetchedmovie.update(update);
+         return fetchedmovie.update(update);
+        
       }
     })
     .catch(e => {

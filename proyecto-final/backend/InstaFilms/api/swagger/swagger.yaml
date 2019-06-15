@@ -541,7 +541,7 @@ definitions:
         type: string
         description: Movie poster.
       status:
-        type: boolean
+        type: string
         description: Is the movie available or not?
 
       
@@ -563,12 +563,10 @@ definitions:
         type: integer
         description:  popcorns of the user
       is_admin:
-        type: integer
-        format: boolean 
+        type: string
         description: Super Admin ( y or nop :( XD)
       silenced:
-        type: integer
-        format: boolean
+        type: string
         description: the user is allow to review movies
       profilePath:
         type: string
@@ -594,12 +592,10 @@ definitions:
         type: integer
         description:  popcorns of the user
       is_admin:
-        type: integer
-        format: boolean 
+        type: string
         description: Super Admin ( y or nop :( XD)
       silenced:
-        type: integer
-        format: boolean
+        type: string
         description: the user is allow to review movies
       profilePath:
         type: string
@@ -617,13 +613,12 @@ definitions:
         type: integer
         description: id User
       standby:
-        type: boolean
-        description: status standby 1 not 0 :(
+        type: string
       viewed:
-        type: boolean
+        type: string
         description: status viewed 1 not 0 :(
       favorite:
-        type: boolean
+        type: string
         description: favorite standby 1 not 0 :(
     required:
       - id_user
@@ -633,14 +628,14 @@ definitions:
   TransactionUpdate:
     type: object
     properties:
-      standby:
-        type: boolean
+      standBy:
+        type: string
         description: status standby 1 not 0 :(
       viewed:
-        type: boolean
+        type: string
         description: status viewed 1 not 0 :(
       favorite:
-        type: boolean
+        type: string
         description: favorite standby 1 not 0 :(
     
     

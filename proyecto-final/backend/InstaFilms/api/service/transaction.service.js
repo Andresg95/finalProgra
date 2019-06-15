@@ -86,10 +86,9 @@ const updateTransaction = async params => {
     const {id_movie, id_user} = params;
     const update = fieldsToUpdate(params);
 
-    console.log(params);
-    console.log(update);
+    console.log("paaaaamrs", update);
 
-    Transaction.findOne({
+   return  Transaction.findOne({
         where: {
             id_movie,
             id_user
@@ -97,7 +96,7 @@ const updateTransaction = async params => {
     }).then(fetchedTransaction=>{
         console.log("inside promise", fetchedTransaction.dataValues);
         if(fetchedTransaction){
-            fetchedTransaction.update(update);
+            return fetchedTransaction.update(update);
         }
     }).catch(e=>{
         logger.error("error fetching transaction", e);
