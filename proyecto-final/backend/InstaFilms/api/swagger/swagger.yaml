@@ -450,26 +450,20 @@ paths:
   
 
   /follow:
-    x-swagger-router-controller: user.controller
+    x-swagger-router-controller: follower.controller
     post:
       description: follow someone
       # used as the method name of the controller
       operationId: addFollowing
       parameters:
-        - name: idFollower
-          in: query
-          description: user
+        - name: follows
+          in: body
+          description: user follows user
           required: true
-          type: integer
-  
-        - name: idToFollow
-          in: query
-          description: user to follow
-          required: true
-          type: integer
-
+          schema:
+            $ref: "#/definitions/followRecord"
       responses:
-        "200":
+        "201":
           description: Success
           schema:
             # a pointer to a definition
@@ -485,12 +479,12 @@ paths:
       description: unfollow a user
       operationId: deleteFollow
       parameters:
-        - name: id
+        - name: user
           in: query
           description: id User to unfollow
           required: true
           type: integer
-        - name: user
+        - name: follows
           in: query
           description: id of follower (Spectateurs)
           required: true
@@ -639,6 +633,18 @@ definitions:
         type: string
         description: favorite standby 1 not 0 :(
     
+  followRecord:
+    type: object
+    properties:
+      user:
+        type: integer
+        description: user id 
+      follows:
+        type: integer
+        description: user id to follow
+    required:
+      - user
+      - follows
     
   
   #transanction

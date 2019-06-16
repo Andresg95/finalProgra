@@ -1,4 +1,3 @@
-
 const { userExists } = require("./user.service");
 const { movieExists } = require("./movie.service");
 
