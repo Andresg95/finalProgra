@@ -10,7 +10,6 @@ const AddTransaction = async (req, res) => {
     const data = await transactionService.AddTransaction(params);
     res.status(200).send(data);
   } catch (error) {
-    console.log("failing ", error);
     logger.error(error);
     res.status(500).send("error in", name), ": ", AddTransaction.name;
   }
@@ -24,8 +23,7 @@ const getTransaction = async (req, res) => {
     };
 
     const data = await transactionService.getTransaction(params);
-    console.log("wtrf", data);
-
+  
     res.status(200).send(data);
   } catch (error) {
     logger.error(error);
@@ -59,8 +57,7 @@ const deleteTransaction = async (req, res) => {
     let data = await transactionService.deleteTransaction(params);
     res.status(200).send(data);
   } catch (error) {
-    console.log(error);
-    
+        
     logger.error(error);
     res.status(500).send("error in", name, ": ", updateTransaction.name);
   }

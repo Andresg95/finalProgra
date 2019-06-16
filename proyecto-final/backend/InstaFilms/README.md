@@ -3,4 +3,7 @@
 tasks to do:
 
 
-delete reviews endpoint
+
+followers:{id}
+
+constants for deleteion response.

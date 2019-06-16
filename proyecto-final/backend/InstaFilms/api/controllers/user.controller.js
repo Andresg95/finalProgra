@@ -22,8 +22,6 @@ const addUser = async (req, res) => {
     const params = {
       ...req.body
     };
-
-    console.log(params);
     
     const data = await userService.addUser(params);
     res.status(200).send(data);
@@ -40,7 +38,6 @@ const updateUser = async (req, res) => {
             ...req.body
         };
         params.id= req.swagger.params.id.value;
-        console.log(params);
         const data = await userService.updateUser(params);
         
         res.status(200).send(data);

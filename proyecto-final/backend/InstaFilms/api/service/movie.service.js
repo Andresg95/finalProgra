@@ -25,10 +25,13 @@ const getMovieById = async IDimdb => {
 };
 
 const addMovie = async newmovie => {
+  //initial value for movie availability
+  newmovie.status = 1;
+
   return movie
     .create(newmovie)
     .then(res => {
-      logger.info("insertion created correctly", res);
+      logger.info("insertion created correctly", res.DataValues);
       return res;
     })
     .catch(e => {
@@ -54,7 +57,6 @@ const updateMovie = async data => {
       throw e;
     });
 
-    return `updated movie with id ${imdbid}`
 };
 
 const getMovieLanding = async fetchGenre => {

@@ -86,8 +86,6 @@ const updateTransaction = async params => {
     const {id_movie, id_user} = params;
     const update = fieldsToUpdate(params);
 
-    console.log("paaaaamrs", update);
-
    return  Transaction.findOne({
         where: {
             id_movie,
