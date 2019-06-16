@@ -13,7 +13,7 @@ const addReview = async (req, res) => {
     res.status(200).send(data);
   } catch (error) {
     logger.error(error);
-    res.send("error in", name), ": ", addReview.name;
+    res.status(500).send("error in", name, ": ", addReview.name);
   }
 };
 
@@ -24,7 +24,7 @@ const getReview = async (req, res) => {
     res.status(200).send(data);
   } catch (error) {
     logger.error(error);
-    res.send("error in", name), ": ", getReview.name;
+    res.status(500).send("error in", name, ": ", getReview.name);
   }
 };
 

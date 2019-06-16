@@ -21,7 +21,7 @@ const addMovie = async (req, res) => {
     res.status(200).send(data);
   } catch (error) {
     logger.error(error);
-    res.status(500).send("error in ", name, ": ", addMovie.name);
+    res.status(500).send(`error in ${name} : ${addMovie.name}`);
   }
 };
 //UPDATE ANY MOVIE fields
@@ -35,7 +35,7 @@ const updateMovieById = async (req, res) => {
     res.status(200).send(data);
   } catch (error) {
     logger.error(error);
-    res.status(500).send("error in", name, ": ", updateMovieById.name);
+    res.status(500).send(`error in ${name} : ${updateMovieById.name}`);
   }
 };
 
@@ -47,7 +47,7 @@ const getMovieLanding = async (req, res) => {
     res.status(200).send(data);
   } catch (error) {
       logger.error(error);
-      res.status(500).send("error in", name, ": ", getMovieLanding.name);
+      res.status(500).send(`error in ${name} : ${getMovieLanding.name}`);
   }
 };
 
@@ -58,7 +58,8 @@ const getMovieTitle = async (req, res) => {
         const data = await movieService.getMoviesByTitle(title);
         res.status(200).send(data);
     } catch (error) {
-        res.status(500).send("error in", name, ": ", getMoviesByTitle.name);
+      logger.error(error)
+      res.status(500).send(`error in ${name} : ${getMovieTitle.name}`);
     }
 }
 

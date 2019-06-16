@@ -20,7 +20,21 @@ const movieExists = async imdbid => {
 
 
 const getMovieById = async IDimdb => {
-  return await movie.findByPk(IDimdb);
+  return await movie.findOne({
+    include: [
+      {
+        model: models.review,
+        attributes: { exclude: ["id_movie"]},
+        include: [{
+          model: models.user,
+          attributes: ["id", "username", "profile_path" ]
+        }]
+      }
+    ],
+    where: {
+      imdbid: IDimdb
+    }
+  });
   
 };
 

@@ -45,5 +45,25 @@ const User = sequelize.define(
     tableName: "users"
   }
 );
+
+User.associate = (models) =>{
+
+  User.hasMany(models.follower, {
+    foreignKey: "follows"
+  });
+
+  User.hasMany(models.review, {
+    foreignKey: "id_user"
+  });
+
+  User.hasMany(models.transaction, {
+    foreignKey: "id_user"
+  })
+}
+
+
+
+
+
 return User;
 }

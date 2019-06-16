@@ -37,6 +37,15 @@ const Transaction = sequelize.define(
   }
 );
 
+Transaction.associate = (models) => {
+
+  Transaction.belongsTo(models.movie, {
+    foreignKey: "id_movie"
+  })
+
+
+}
+
 return Transaction;
 
 }

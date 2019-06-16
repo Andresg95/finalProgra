@@ -27,7 +27,7 @@ const addUser = async (req, res) => {
     res.status(200).send(data);
   } catch (error) {
     logger.error(error);
-    res.send("error in", name), ": ", addUser.name;
+    res.status(500).send("error in", name, ": ", addUser.name);
   }
 };
 

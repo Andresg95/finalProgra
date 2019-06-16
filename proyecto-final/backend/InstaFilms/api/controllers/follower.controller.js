@@ -12,6 +12,8 @@ const addFollowing = async (req, res) => {
     res.status(201).send(data);
   } catch (error) {
       logger.error(error)
+      console.log("whats going on", error);
+      
       res.send(`error in ${name} : ${addFollowing.name}`);
 
   }

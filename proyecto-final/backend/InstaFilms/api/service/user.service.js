@@ -10,7 +10,35 @@ const sequelize = require("sequelize");
 const Op = sequelize.Op;
 
 const getUserById = async id => {
-    const data = await User.findByPk(id); 
+    const data = await User.findOne({
+      include: [
+        {
+          model: models.follower,
+          attributes: { exclude : ["follows"]}
+
+        },
+        {
+          model: models.review,
+          attributes: { exclude: ["id_user", "id_movie"]},
+          include:[{
+            model: models.movie,
+            attributes: ["title", "poster"],
+          }],
+        },
+        {
+          model: models.transaction,
+          include:[{
+            model: models.movie,
+            attributes: ["title", "poster"],
+          }],
+
+        }
+      ],
+      where: {
+        id
+      }
+    }); 
+
     if(!_.isNull(data)){
       delete data.dataValues.password;
     }   

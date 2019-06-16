@@ -11,7 +11,7 @@ const AddTransaction = async (req, res) => {
     res.status(200).send(data);
   } catch (error) {
     logger.error(error);
-    res.status(500).send("error in", name), ": ", AddTransaction.name;
+    res.status(500).send("error in", name, ": ", AddTransaction.name);
   }
 };
 
@@ -27,7 +27,7 @@ const getTransaction = async (req, res) => {
     res.status(200).send(data);
   } catch (error) {
     logger.error(error);
-    res.status(500).send("error in", name), ": ", getTransaction.name;
+    res.status(500).send("error in", name, ": ", getTransaction.name);
   }
 };
 

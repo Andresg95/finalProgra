@@ -43,5 +43,15 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "movies"
     }
   );
+
+  Movie.associate = (models) => {
+
+    Movie.hasMany(models.review, {
+      foreignKey: "id_movie"
+    })
+
+  }
+
+
   return Movie;
 };
