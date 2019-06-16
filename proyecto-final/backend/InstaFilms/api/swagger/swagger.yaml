@@ -320,57 +320,19 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-
-  /review:
+            
+  /reviews:
     x-swagger-router-controller: review.controller
-    get:
-      description: get all reviews
-      # used as the method name of the controller
-      operationId: getReview
-      parameters:
-        - name: user
-          in: query
-          description: id User
-          required: true          
-          type: integer 
-        - name: movie
-          in: query
-          description: id imdb movie
-          required: true
-          type: string                  
-      responses:
-        "200":
-          description: Success
-          schema:
-            # a pointer to a definition
-            $ref: "#/definitions/GetReviewResponse"
-        # responses may fall through to errors
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
     post:
       description:  add review of movie
       # used as the method name of the controller
       operationId: addReview
       parameters:
-        - name: id
-          in: query
-          description: Review Id
-          required: true
-          type: integer
-        - name: user
-          in: query
-          description: id User
-          required: true
-          type: integer
-          
-        - name: movie
-          in: query
-          description: id imdb movie
-          required: true
-          type: string
-    
+        - name: review
+          in: body
+          description: review
+          schema:
+            $ref: "#/definitions/Review"
       responses:
         "201":
           description: Success
@@ -384,23 +346,44 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+  /review/{id}:
+    x-swagger-router-controller: review.controller
+    get:
+      description: get single review
+      # used as the method name of the controller
+      operationId: getReview
+      parameters:
+        - name: id
+          in: path
+          description: id review
+          required: true
+          type: string                  
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/GetReviewResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     put:
-      description: update a popcorns of reviwe 
+      description: update a popcorns of review 
       # used as the method name of the controller
       operationId: updateReview
       parameters:
         - name: id
-          in: query
-          description: Review Id
+          in: path
+          description: id review
           required: true
-          type: integer
-  
-        - name: popcorns
-          in: query
-          description: numer of popcorn of review
-          required: true
-          type: integer
-
+          type: string
+        - name: review
+          in: body
+          description: review
+          schema:
+            $ref: "#/definitions/UpdatePopcorn"
       responses:
         "200":
           description: Success
@@ -413,7 +396,27 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"    
-
+    delete:
+      description: Delete a review
+      operationId: deleteReview
+      parameters:
+        - name: id
+          in: path
+          description: Id review
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/SuccessResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
+  
   /review/{id}/{type}:
     x-swagger-router-controller: review.controller
     get:
@@ -540,9 +543,7 @@ definitions:
       poster:
         type: string
         description: Movie poster.
-      status:
-        type: string
-        description: Is the movie available or not?
+      
 
       
 
@@ -670,7 +671,7 @@ definitions:
       - id_movie
 
 #reviews
-  Reviews:
+  Review:
     type: object
     properties:
       id_movie:
@@ -682,14 +683,21 @@ definitions:
       rate:
         type: string
         description: Text review not passing 500 chars
-      popcorns:
-        type: integer
-        description: votes of review
     required:
       - id_user
+      - id_movie
 
 #GetResponses
   #Movies
+  
+  UpdatePopcorn:
+    type: object 
+    properties:
+      popcorns:
+        type: integer
+        description: popcorn to update.
+    required:
+      - popcorns
 
 
   GetReviewResponse:
@@ -825,7 +833,7 @@ definitions:
       Reviews:
         type: array
         items:
-          $ref: "#/definitions/Reviews"
+          $ref: "#/definitions/Review"
     required:
       - Reviews
 
