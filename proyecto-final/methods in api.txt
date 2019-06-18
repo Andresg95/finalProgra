@@ -1,0 +1,58 @@
+Autentificación (users)
+	CheckUsername
+	CheckEmail
+	Login
+	
+Movies(admin)
+	AddMovie ----->done
+	UpdateMovie ----> done
+	DisableMovie  ---> done (editMovie) 
+	Silence user  ---> 
+	
+Movies(users)
+	GetMoviesTitle ------->done
+	GetMovie  --------->done
+	GetMoviePoster ---->done
+	AddWatchLater
+	AddViewed
+	AddFavorite
+	GetReviewsFromMovie
+
+Usuarios
+	UploadPicture ---> 
+	UpdatePicture ---> done (updateuser)
+	Getpopcorn
+	Follow
+	UnFollow
+	GetSpectators
+	GetFollowers
+--viendo el perfil de alguien mas
+	GetUsername
+	Getpopcorn
+	GetFavorites
+	GetReviews
+			
+Reviews
+	
+	AddReview
+	GivePopcorn (+ -)
+	
+InTheworks
+	AddToViewed
+	RemoveFromStandBy
+
+Viewed
+	RemoveViewed
+	AddToFavorites
+
+Favorites
+	RemoveFromFavorites
+
+	idUsuario, IdPelicula
+
+	
+
+	
+3MdpPaqe
+
+	

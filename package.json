@@ -13,5 +13,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/programacionwebuneatlantico/pg2grupo1#readme"
+  "homepage": "https://bitbucket.org/programacionwebuneatlantico/pg2grupo1#readme",
+  "dependencies": {
+    "axios": "^0.19.0"
+  }
 }

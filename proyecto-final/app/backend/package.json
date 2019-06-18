@@ -1,0 +1,40 @@
+{
+  "name": "instafilms",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Web Programming 1",
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.12.3",
+    "lodash": "^4.17.11",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.8.9",
+    "sequelize-cli": "^5.5.0",
+    "swagger-express-mw": "^0.7.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1",
+    "should": "^7.1.0",
+    "supertest": "^1.0.0",
+    "swagger": "^0.7.5",
+    "swagger-editor": "^3.6.20",
+    "yaml-validator": "^2.0.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "mock": "swagger project start -m",
+    "test": "swagger project test",
+    "edit": "swagger project edit",
+    "dev": "nodemon app.js",
+    "validate": "yaml-validator",
+    "migrate": "sequelize db:migrate",
+    "undo-migrate": "sequelize db:migrate:undo",
+    "undo-migrate-all": "sequelize db:migrate:undo:all",
+    "create-migration": "sequelize migration:generate --name"
+  }
+}
