@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+
+        var urlbase = "https://api.themoviedb.org/3/discover/movie?api_key=7dd6e501f6ab8c86a83fb262dddb6195&primary_release_year=";
+        var urlbase2 = "http://www.omdbapi.com/?t=";
+        var apikey = "&apikey=54d82eef";
+
+
+        const populateArray = async () => {
+            let filmlist = [];
+
+            for (var i = 2000; i < 2020; i++) {
+                var url = urlbase + i;
+
+                //esperamos a que la funcion getJSON nos devuelva todos los results
+                await $.getJSON(url, function (data) {
+                    $.each(data.results, function (index, film) {
+                        let title = film.title;
+                        title = title.replace(/ /g, "+");
+                        filmlist.push(title);
+                    });
+                });
+            }
+
+            console.log("Longitud de list en getJSON:", filmlist.length)
+            return filmlist;
+        };
+
+        // const imprimirarray = async () => {
+        //     const fullMovies = await populateArray();
+        //     let IdMovieToSearch = 0;
+        //     console.log(`El id ${IdMovieToSearch} nos devulve el título => ${fullMovies}`);
+        //
+        // }
+
+        const getInfo = async () => {
+          const fullMovies = await populateArray();
+          let infoMovies = [];
+
+          for (var i=0; i<fullMovies.length; i++) {
+            var url2 = urlbase2 + fullMovies[i] + apikey;
+
+            // imdbID, titulo, ano, duracion, genero, director, escritor, actores, trama, poster
+            await $.getJSON(url2, function (data) {
+              var movie = new Object();
+              movie.imdbid = data.imdbID;
+              movie.title = data.Title;
+              movie.year = data.Year;
+              movie.runtime = data.Runtime;
+              movie.genre = data.Genre;
+              movie.director = data.Director;
+              movie.writer = data.Writer;
+              movie.actors = data.Actors;
+              movie.plot = data.Plot;
+              movie.poster = data.Poster;
+              infoMovies.push(movie);
+            });
+          }
+          return infoMovies;
+        };
+
+    getInfo();
+
+    </script>
+
+
+</head>
+
+<body>
+</body>
+
+</html>
