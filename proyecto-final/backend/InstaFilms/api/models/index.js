@@ -1,11 +1,13 @@
-"use strict";
+'use strict';
 
-const fs = require("fs");
-const path = require("path");
-const Sequelize = require("sequelize");
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
 const db = {};
-const config = require("../../config/dbconfig");
+const config = require('../../config/dbconfig')
+
 
 const sequelize = new Sequelize(config.DB_NAME, config.USERNAME, config.PASSWORD, {
   host: config.HOST,
@@ -23,15 +25,13 @@ const sequelize = new Sequelize(config.DB_NAME, config.USERNAME, config.PASSWORD
 
 
 //const sequelize = new Sequelize(`mysql://${config.USERNAME}:${config.PASSWORD}@${config.HOST}:${config.PORT}/${config.DB_NAME}`);
-
-fs.readdirSync(__dirname)
+fs
+  .readdirSync(__dirname)
   .filter(file => {
-    return (
-      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
-    );
+    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
   })
   .forEach(file => {
-    const model = sequelize["import"](path.join(__dirname, file));
+    const model = sequelize['import'](path.join(__dirname, file));
     db[model.name] = model;
   });
 
@@ -44,13 +44,14 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+
 sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Connection has been established successfully.");
-  })
-  .catch(err => {
-    console.error("Unable to connect to the database:", err);
-  });
+    .authenticate()
+    .then(() => {
+        console.log('Connection has been established successfully.');
+    })
+    .catch(err => {
+        console.error('Unable to connect to the database:', err);
+    });
 
 module.exports = db;
