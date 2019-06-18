@@ -1,30 +1,31 @@
-import React, { Component } from 'react';
-import Axios from 'axios';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { fetchPosters } from './HomeThunks';
 import MoviePoster from './MoviePoster';
 
-export default class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      posters: [],
-    };
-  }
+export const Home = ({ posters, onFetchPosters }) => {
+  useEffect(() => {
+    onFetchPosters('Family');
+  }, []);
 
-  componentDidMount() {
-    Axios.get(`http://${process.env.API_URL}/movies/landing/?genre=Action`).then((res) => {
-      const posters = res.data;
-      this.setState({ posters });
-    });
-  }
+  return (
+    <div>
+      {posters.map(({ imdbid, poster }) => (
+        <MoviePoster key={imdbid} url={`${poster}`} />
+      ))}
+    </div>
+  );
+};
 
-  render() {
-    const { posters } = this.state;
-    return (
-      <div>
-        {posters.map(({ imdbid, poster }) => (
-          <MoviePoster key={imdbid} url={`${poster}`} />
-        ))}
-      </div>
-    );
-  }
-}
+const mapStateToProps = ({ home }) => ({
+  posters: home.posters,
+});
+
+const mapDispatchToProps = dispatch => ({
+  onFetchPosters: genre => dispatch(fetchPosters(genre)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Home);
